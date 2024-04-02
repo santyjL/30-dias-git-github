@@ -109,7 +109,7 @@ usuario y dirección de correo electrónico. Esto es importante porque los "comm
 Git usan esta información, y es introducida de manera inmutable en los commits
 que envías:
 
-´´´js
+´´´
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ´´´
@@ -119,7 +119,7 @@ $ git config --global user.email johndoe@example.com
 Si quieres comprobar tu configuración, puedes usar el comando git config --list para
 mostrar todas las propiedades que Git ha configurado:
 
-´´´js
+´´´
 $ git config --list
 user.name=John Doe
 user.email=johndoe@example.com
@@ -132,7 +132,7 @@ color.diff=auto
 
 Si alguna vez necesitas ayuda usando Git puedes usar el comando git help
 
-´´´js
+´´´
 $ git help
 ´´´
 
