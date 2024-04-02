@@ -6,7 +6,7 @@ versiones específicas más adelante
 
 ## control de verciones locales
 
-![vcs & rcs](/30-dias-git-github/imagenes/vcs%20local%20-%20dia%20uno.jpg)
+![vcs & rcs](/imagenes/vcs%20local%20-%20dia%20uno.jpg)
 
 Una de las herramientas de control de versiones más popular fue un sistema llamado
 RCS, que todavía podemos encontrar en muchas de las computadoras actuales. Incluso el
@@ -17,7 +17,7 @@ recrear cómo era un archivo en cualquier momento a partir de dichos parches
 
 ## Sistemas de Control de Versiones Centralizados
 
-![cvcs](/30-dias-git-github/imagenes/cvcs%20centralizados%20-%20dia%20uno.jpg)
+![cvcs](/imagenes/cvcs%20centralizados%20-%20dia%20uno.jpg)
 
 El siguiente gran problema con el que se encuentran las personas es que necesitan
 colaborar con desarrolladores en otros sistemas. Los sistemas de Control de Versiones
@@ -40,7 +40,7 @@ en archivos en los que hayan estado trabajando.
 
 ## Sistemas de Control de Versiones Distribuidos
 
-![vcs & rcs](/30-dias-git-github/imagenes/dvcs%20distribuidas%20-%20dia%20uno.jpg)
+![vcs & rcs](/imagenes/dvcs%20distribuidas%20-%20dia%20uno.jpg)
 
 Los sistemas de Control de Versiones Distribuidos (DVCS por sus siglas en inglés) ofrecen
 soluciones para los problemas que han sido mencionados. En un DVCS (como Git,
