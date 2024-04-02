@@ -71,7 +71,7 @@ versión. Puedes instalarlo como un paquete, a partir de un archivo instalador o
 el código fuente y compilándolo tú mismo.
 
 También hay varias maneras de instalar Git en Windows. La forma más oficial está
-disponible para ser descargada en el sitio web de Git. Solo tienes que visitar ![http://gitscm.com/download/win](http://gitscm.com/download/win) y la descarga empezará automáticamente.
+disponible para ser descargada en el sitio web de Git. Solo tienes que visitar [https://git-scm.com/download/win](https://git-scm.com/download/win) y la descarga empezará automáticamente.
 
 ## Configurando Git por primera vez
 
