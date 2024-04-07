@@ -92,7 +92,6 @@ confirmas todos los cambios preparados, y repites el ciclo.
 > - Revisando el Estado de tus Archivos
 > - Rastrear Archivos Nuevos
 > - Preparar Archivos Modificados
-> - Estado Abreviado
 > - Ignorar Archivos
 > - Confirmar tus Cambios
 > - Eliminar Archivos
