@@ -365,6 +365,6 @@ origin git@github.com:mojombo/grit.git (push)
 
 > - Añadir Repositorios Remotos
 > - Traer y Combinar Remotos
-> - Deshacer Cosas
+> - Enviar a Tus Remotos
 > - Inspeccionar un Remoto
 > - Eliminar y Renombrar Remotos
