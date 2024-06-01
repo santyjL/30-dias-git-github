@@ -1,0 +1,261 @@
+# Etiquetado
+
+Como muchos VCS, Git tiene la posibilidad de etiquetar puntos específicos del
+historial como importantes. Esta funcionalidad se usa típicamente para marcar versiones
+de lanzamiento (v1.0, por ejemplo). En esta sección, aprenderás cómo listar las etiquetas
+disponibles, cómo crear nuevas etiquetas y cuáles son los distintos tipos de etiquetas.
+
+## Listar Tus Etiquetas
+
+Listar las etiquetas disponibles en Git es sencillo. Simplemente escribe git tag:
+
+```bash
+$ git tag
+v0.1
+v1.3
+```
+
+Este comando lista las etiquetas en orden alfabético; el orden en el que aparecen no
+tiene mayor importancia.
+
+También puedes buscar etiquetas con un patrón particular. El repositorio del código
+fuente de **Git**, por ejemplo, contiene más de 500 etiquetas. Si sólo te interesa ver la
+serie **1.8.5**, puedes ejecutar:
+
+```bash
+$ git tag -l 'v1.8.5*'
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+v1.8.5-rc3
+v1.8.5.1
+v1.8.5.2
+v1.8.5.3
+v1.8.5.4
+v1.8.5.5
+```
+
+## Crear Etiquetas
+
+Git utiliza dos tipos principales de etiquetas: **ligeras** y **anotadas**.
+Una etiqueta ligera es muy parecido a una rama que no cambia - simplemente es un
+puntero a un commit específico.
+
+Sin embargo, las etiquetas anotadas se guardan en la base de datos de **Git** como
+objetos enteros. Tienen un checksum; contienen el nombre del etiquetador, correo
+electrónico y fecha; tienen un mensaje asociado; y pueden ser firmadas y verificadas
+con **GNU Privacy Guard (GPG)**. Normalmente se recomienda que crees etiquetas anotadas,
+de manera que tengas toda esta información; pero si quieres una etiqueta temporal o
+por alguna razó
+
+### Etiquetas Anotadas
+
+Crear una etiqueta anotada en Git es sencillo. La forma más fácil de hacerlo es
+especificar la opción -a cuando ejecutas el comando **git tag**:
+
+```bash
+$ git tag -a v1.4 -m 'my version 1.4'
+$ git tag
+v0.1
+v1.3
+v1.4
+```
+
+La opción **-m** especifica el mensaje de la etiqueta, el cual es guardado junto con ella. Si
+no especificas el mensaje de una etiqueta anotada, **Git** abrirá el editor de texto para
+que lo escribas.
+Puedes ver la información de la etiqueta junto con el commit que está etiquetado al
+usar el comando **git show**:
+
+```bash
+$ git show v1.4
+tag v1.4
+Tagger: Ben Straub <ben@straub.cc>
+Date: Sat May 3 20:19:12 2014 -0700
+my version 1.4
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+  changed the version number
+```
+
+El comando muestra la información del etiquetador, la fecha en la que el commit fue
+etiquetado y el mensaje de la etiqueta, antes de mostrar la información del commit.
+
+### Etiquetas Ligeras
+
+La otra forma de etiquetar un commit es mediante una **etiqueta ligera**. Una etiqueta
+ligera no es más que el **checksum** de un commit guardado en un archivo - no incluye
+más información. Para crear una etiqueta ligera, no pases las opciones **-a**, **-s** ni **-m**:
+
+```bash
+$ git tag v1.4-lw
+$ git tag
+v0.1
+v1.3
+v1.4
+v1.4-lw
+v1.5
+```
+
+Esta vez, si ejecutas git show sobre la etiqueta no verás la información adicional. El
+comando solo mostrará el commit:
+
+```bash
+$ git show v1.4-lw
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+  changed the version number
+```
+
+## Etiquetado Tardío
+
+También puedes etiquetar commits mucho tiempo después de haberlos hecho.
+Supongamos que tu historial luce como el siguiente:
+
+```bash
+$ git log --pretty=oneline
+15027957951b64cf874c3557a0f3547bd83b3ff6 Merge branch 'experiment'
+a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support
+0d52aaab4479697da7686c15f77a3d64d9165190 one more thing
+6d52a271eda8725415634dd79daabbc4d9b6008e Merge branch 'experiment'
+0b7434d86859cc7b8c3d5e1dddfed66ff742fcbc added a commit function
+4682c3261057305bdd616e23b64b0857d832627b added a todo file
+166ae0c4d3f420721acbb115cc33848dfcc2121a started write support
+9fceb02d0ae598e95dc970b74767f19372d61af8 updated rakefile
+964f16d36dfccde844893cac5b347e7b3d44abbc commit the todo
+8a5cbc430f1a9c3d00faaeffd07798508422908a updated readme
+```
+
+Ahora, supongamos que olvidaste etiquetar el proyecto en su versión v1.2, la cual
+corresponde al commit **“updated rakefile”**. Igual puedes etiquetarlo. Para etiquetar un
+commit, debes especificar el **checksum** del commit (o parte de él) al final del comando:
+
+```bash
+$ git tag -a v1.2 9fceb02
+```
+
+Puedes ver que has etiquetado el commit:
+
+```bash
+$ git tag
+v0.1
+v1.2
+v1.3
+v1.4
+v1.4-lw
+v1.5
+$ git show v1.2
+tag v1.2
+Tagger: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Feb 9 15:32:16 2009 -0800
+version 1.2
+commit 9fceb02d0ae598e95dc970b74767f19372d61af8
+Author: Magnus Chacon <mchacon@gee-mail.com>
+Date: Sun Apr 27 20:43:35 2008 -0700
+  updated rakefile
+...
+```
+
+## Compartir Etiquetas
+
+Por defecto, el comando git push no transfiere las etiquetas a los servidores remotos.
+Debes enviar las etiquetas de forma explícita al servidor luego de que las hayas creado.
+Este proceso es similar al de compartir ramas remotas - puedes ejecutar
+**git push origin [etiqueta].**
+
+```bash
+$ git push origin v1.5
+Counting objects: 14, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (12/12), done.
+Writing objects: 100% (14/14), 2.05 KiB | 0 bytes/s, done.
+Total 14 (delta 3), reused 0 (delta 0)
+To git@github.com:schacon/simplegit.git
+ * [new tag] v1.5 -> v1.5
+```
+
+Si quieres enviar varias etiquetas a la vez, puedes usar la opción **--tags** del comando
+**git push**. Esto enviará al servidor remoto todas las etiquetas que aun no existen en él.
+
+```bash
+$ git push origin --tags
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 160 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+To git@github.com:schacon/simplegit.git
+ * [new tag] v1.4 -> v1.4
+ * [new tag] v1.4-lw -> v1.4-lw
+
+```
+
+Por lo tanto, cuando alguien clone o traiga información de tu repositorio, también
+obtendrá todas las etiquetas.
+
+## Sacar una Etiqueta
+
+En Git, no puedes sacar (check out) una etiqueta, pues no es algo que puedas mover. Si
+quieres colocar en tu directorio de trabajo una versión de tu repositorio que coincida
+con alguna etiqueta, debes crear una rama nueva en esa etiqueta:
+
+```bash
+$ git checkout -b version2 v2.0.0
+Switched to a new branch 'version2'
+```
+
+Obviamente, si haces esto y luego confirmas tus cambios, tu rama version2 será
+ligeramente distinta a tu etiqueta v2.0.0 puesto que incluirá tus nuevos cambios; así que
+ten cuidado
+
+## Resumen
+
+- Etiquetado:
+
+  > - Git permite etiquetar puntos específicos del historial, comúnmente para marcar versiones de lanzamiento.
+
+- Listar Tus Etiquetas:
+
+  > - Usa `git tag` para listar todas las etiquetas en orden alfabético.
+  > - Usa `git tag -l 'v1.8.5*'` para buscar etiquetas con un patrón específico.
+
+- Crear Etiquetas:
+
+  > - Tipos de etiquetas:
+  > - **Ligeras**: un puntero a un commit específico, similar a una rama que no cambia.
+  > - **Anotadas**: guardadas como objetos en la base de datos de Git, incluyen detalles como nombre, correo, fecha y mensaje.
+
+  > - Etiquetas Anotadas:
+  > - Usa `git tag -a [etiqueta] -m [mensaje]` para crear una etiqueta anotada.
+  > - Ejemplo: `git tag -a v1.4 -m 'my version 1.4'`
+  > - Usa `git show [etiqueta]` para ver la información de la etiqueta.
+
+  > - Etiquetas Ligeras:
+  > - Usa `git tag [etiqueta]` sin opciones para crear una etiqueta ligera.
+  > - Ejemplo: `git tag v1.4-lw`
+  > - `git show [etiqueta]` solo muestra el commit asociado.
+
+- Etiquetado Tardío:
+
+  > - Puedes etiquetar commits anteriores especificando el checksum del commit.
+  > - Ejemplo: `git tag -a v1.2 [checksum]`
+
+- Compartir Etiquetas:
+
+  > - Las etiquetas no se transfieren automáticamente al servidor remoto con `git push`.
+  > - Usa `git push origin [etiqueta]` para enviar una etiqueta específica.
+  > - Usa `git push origin --tags` para enviar todas las etiquetas nuevas al servidor.
+
+- Sacar una Etiqueta:
+  > - No puedes hacer checkout directamente de una etiqueta.
+  > - Crea una rama nueva basada en la etiqueta: `git checkout -b [nueva-rama] [etiqueta]`
+  > - Ejemplo: `git checkout -b version2 v2.0.0`
+
+### El siguiente dia se vera :
+
+> - Alias de Git
+> - Repaso
+> - Ramificaciones en Git
+> - Procedimientos Básicos para Ramificar y Fusionar
+> - Gestión de Ramas
